@@ -16,7 +16,7 @@ permissions:
 jobs:
   security-scans:
     name: Run Security Scans
-    uses: wohlig/security/.github/workflows/security.yml@main
+    uses: rameshlodh/security/.github/workflows/security.yml@main
     secrets:
       SEMGREP_TOKEN: ${{ secrets.SEMGREP_TOKEN }}
 
