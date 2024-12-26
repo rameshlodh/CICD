@@ -1,0 +1,15 @@
+name: Call Security Scans Workflow
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  security-scans:
+    uses: rameshlodh/security/.github/workflows/security.yml@main
+    secrets:
+      SEMGREP_TOKEN: ${{ secrets.SEMGREP_TOKEN }}
