@@ -1,4 +1,4 @@
-name: Call Security Scans Workflow
+name: Security Scans and Docker Build-Push
 
 on:
   push:
@@ -9,8 +9,15 @@ on:
       - main
 
 jobs:
+  security-scans:
+    name: Run Security Scans
+    uses: rameshlodh/security/.github/workflows/security.yml@main
+    secrets:
+      SEMGREP_TOKEN: ${{ secrets.SEMGREP_TOKEN }}
+
   docker-build-push:
     name: Docker Build and Push to Docker Hub
+    needs: security-scans
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
@@ -24,15 +31,8 @@ jobs:
 
       # - name: Build Docker Image
       #   run: |
-      #     docker build -t ${{ secrets.DOCKER_HUB_USERNAME }}/application:latest .
+      #     docker build -t ${{ secrets.DOCKER_HUB_USERNAME }}/your-repo:latest .
 
       # - name: Push Docker Image
       #   run: |
-      #     docker push ${{ secrets.DOCKER_HUB_USERNAME }}/application:latest
-
-  security-scans:
-    needs: docker-build-push
-    uses: rameshlodh/security/.github/workflows/security.yml@main
-    secrets:
-      SEMGREP_TOKEN: ${{ secrets.SEMGREP_TOKEN }}
-
+      #     docker push ${{ secrets.DOCKER_HUB_USERNAME }}/your-repo:latest
