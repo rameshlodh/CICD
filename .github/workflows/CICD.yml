@@ -10,8 +10,9 @@ on:
   workflow_dispatch:  # Allows manual trigger
 
 permissions:
-  contents: read
+  contents: write
   packages: write
+  actions: write
 
 jobs:
   security-scans:
@@ -19,6 +20,7 @@ jobs:
     uses: rameshlodh/security/.github/workflows/security.yml@main
     secrets:
       SEMGREP_TOKEN: ${{ secrets.SEMGREP_TOKEN }}
+      GIT_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   docker-build-push:
     name: Docker Build and Push
