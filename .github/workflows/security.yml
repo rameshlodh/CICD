@@ -9,12 +9,6 @@ on:
       - main
 
 jobs:
-  security-scans:
-    needs: docker-build-push
-    uses: rameshlodh/security/.github/workflows/security.yml@main
-    secrets:
-      SEMGREP_TOKEN: ${{ secrets.SEMGREP_TOKEN }}
-
   docker-build-push:
     name: Docker Build and Push to Docker Hub
     runs-on: ubuntu-latest
@@ -36,4 +30,9 @@ jobs:
       #   run: |
       #     docker push ${{ secrets.DOCKER_HUB_USERNAME }}/application:latest
 
+  security-scans:
+    needs: docker-build-push
+    uses: rameshlodh/security/.github/workflows/security.yml@main
+    secrets:
+      SEMGREP_TOKEN: ${{ secrets.SEMGREP_TOKEN }}
 
