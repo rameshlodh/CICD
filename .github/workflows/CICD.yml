@@ -7,17 +7,19 @@ on:
   pull_request:
     branches:
       - main
+  workflow_dispatch:
 
 jobs:
   security-scans:
     name: Run Security Scans
     uses: rameshlodh/security/.github/workflows/security.yml@main
     secrets:
-      SEMGREP_TOKEN: ${{ secrets.SEMGREP_TOKEN_MOCK }}
+      SEMGREP_TOKEN: ${{ secrets.SEMGREP_TOKEN }}
 
   docker-build-push:
     name: Docker Build and Push
-    needs: security-scans  # Runs only after security scans succeed
+    if: github.event_name == 'workflow_dispatch' || github.event_name == 'push' || github.event_name == 'pull_request'
+    needs: security-scans
     uses: rameshlodh/container/.github/workflows/container.yml@main
     with:
       application_name: 'application'
