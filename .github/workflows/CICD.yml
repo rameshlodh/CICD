@@ -7,7 +7,11 @@ on:
   pull_request:
     branches:
       - main
-  workflow_dispatch:
+  workflow_dispatch:  # Allows manual trigger
+
+permissions:
+  contents: read
+  packages: write
 
 jobs:
   security-scans:
@@ -17,9 +21,9 @@ jobs:
       SEMGREP_TOKEN: ${{ secrets.SEMGREP_TOKEN }}
 
   docker-build-push:
-    name: Run Docker Workflow
+    name: Docker Build and Push
     if: github.event_name == 'workflow_dispatch' || github.event_name == 'push' || github.event_name == 'pull_request'
-    needs: security-scans
+    needs: security-scans  # Ensures security scans run first
     uses: rameshlodh/container/.github/workflows/container.yml@main
     with:
       application_name: 'application'
