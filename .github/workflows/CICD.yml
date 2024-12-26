@@ -17,10 +17,10 @@ jobs:
 
   docker-build-push:
     name: Docker Build and Push
-    needs: security-scans  # Ensures this job runs only if security-scans succeed
+    needs: security-scans  # Runs only after security scans succeed
     uses: rameshlodh/container/.github/workflows/container.yml@main
     with:
-      application_name: 'application'  # Application name passed to the reusable workflow
+      application_name: 'application'
     secrets:
       DOCKER_HUB_USERNAME: ${{ secrets.DOCKER_HUB_USERNAME }}
       DOCKER_HUB_ACCESS_TOKEN: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
