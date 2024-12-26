@@ -17,7 +17,7 @@ jobs:
       SEMGREP_TOKEN: ${{ secrets.SEMGREP_TOKEN }}
 
   docker-build-push:
-    name: Docker Build and Push
+    name: Run Docker Workflow
     if: github.event_name == 'workflow_dispatch' || github.event_name == 'push' || github.event_name == 'pull_request'
     needs: security-scans
     uses: rameshlodh/container/.github/workflows/container.yml@main
