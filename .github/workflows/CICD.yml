@@ -20,6 +20,12 @@ jobs:
     uses: rameshlodh/security/.github/workflows/security.yml@main
     secrets:
       SEMGREP_TOKEN: ${{ secrets.SEMGREP_TOKEN }}
+  
+  semgrep-scans:
+    name: Run semgrep from errorhunter
+    uses: ramesherrorhunter/semgrep/.github/workflows/semgrep.yml@main
+    secrets:
+      SEMGREP_TOKEN: ${{ secrets.SEMGREP_TOKEN }}
 
   docker-build-push:
     name: Docker Build and Push
